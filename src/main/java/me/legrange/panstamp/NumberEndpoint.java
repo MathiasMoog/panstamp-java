@@ -42,9 +42,14 @@ final class NumberEndpoint extends AbstractEndpoint<Double> {
            value = (value - unit.getOffset()) / unit.getFactor();
         }
         long val = value.longValue();
-        byte bytes[] = new byte[epDef.getSize().getBytes()];
+        byte bytes[];
+        if (reg.hasValue()) {
+            bytes = reg.getValue();
+        } else {
+            bytes = new byte[epDef.getRegister().getByteSize()];
+        }
         for (int i = epDef.getSize().getBytes() - 1; i >= 0; --i) {
-            bytes[i] = (byte) (val & 0xFF);
+            bytes[epDef.getPosition().getBytePos() + i] = (byte) (val & 0xFF);
             val = val >>> 8;
         }
         reg.setValue(bytes);
