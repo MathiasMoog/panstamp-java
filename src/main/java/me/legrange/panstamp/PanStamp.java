@@ -303,8 +303,10 @@ public final class PanStamp {
 
     /**
      * send a query message to the remote node
+     * @param id register
+     * @throws ModemException
      */
-    void sendQueryMessage(int id) throws ModemException {
+    public void sendQueryMessage(int id) throws ModemException {
         nw.sendQueryMessage(this, id);
     }
 
